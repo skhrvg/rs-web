@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+  <title>Расписание РосНОУ</title>
+  <meta name="description" content="">
+  <meta property="og:title" content="Расписание РосНОУ">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css" />
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <script src="semantic/dist/semantic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="script.js"></script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="res/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="res/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="res/favicon-16x16.png">
+  <link rel="manifest" href="res/site.webmanifest">
+  <link rel="mask-icon" href="res/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="res/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="РосНОУ">
+  <meta name="application-name" content="РосНОУ">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-config" content="res/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="res/banner.png" />
+  <meta property="og:image" content="res/banner.png" />
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="315">
+</head>
+
+<body>
+  <div class="ui mini modal">
+    <div class="header">
+      Настройки
+    </div>
+    <div class="content">
+      <div class="ui sub header">Форма обучения</div>
+      <select class="ui fluid dropdown disabled">
+        <option value="Очная" selected>Очная</option>
+        <option value="Очно-заочная">Очно-заочная</option>
+        <option value="Заочная">Заочная</option>
+      </select>
+      <div class="ui sub header">Уровень обучения</div>
+      <select class="ui fluid dropdown selectStudyLevel" id="selectStudyLevel" onchange="getGroups();">
+        <option value="">Выберите...</option>
+        <option value="Бакалавриат">Бакалавриат</option>
+        <option value="Магистратура">Магистратура</option>
+      </select>
+      <div class="ui sub header">Институт</div>
+      <select class="ui fluid dropdown selectInstitute" id="selectInstitute" onchange="getGroups();">
+        <option value="">Выберите...</option>
+        <option value="Институт информационных систем и инженерно-компьютерных технологий">Институт информационных
+          систем и инженерно-компьютерных технологий</option>
+        <option value="Институт бизнес-технологий">Институт бизнес-технологий</option>
+        <option value="Институт психологии и педагогики">Институт психологии и педагогики</option>
+        <option value="Юридический институт">Юридический институт</option>
+        <option value="Институт экономики, управления и финансов">Институт экономики, управления и финансов</option>
+        <option value="Налоговый институт" disabled>Налоговый институт</option>
+      </select>
+      <div class="ui sub header">Группа</div>
+      <select class="ui fluid dropdown selectGroup" id="selectGroup" onchange="checkGroup();">
+        <option value="">Группы не найдены</option>
+      </select>
+    </div>
+    <div class="actions">
+      <button class="ui positive right labeled icon button disabled" onclick="saveSettings();" id="saveSettings">
+        Сохранить
+        <i class="checkmark icon"></i>
+      </button>
+    </div>
+  </div>
+  <script>
+    $('.ui.dropdown')
+      .dropdown();
+    if (!Cookies.get("group") || Cookies.get("group") == "null") {
+      openSettings();
+    }
+  </script>
+  <div class="ui raised very padded container segment" id="page">
+    <button class="ui right corner icon huge label mobile editButton" onclick="openSettings();">
+      <i class="cog icon"></i>
+    </button>
+    <div class="ui stackable grid">
+      <div class="thirteen wide column">
+        <h2 class="ui header">
+          <img src="res/logo.png">
+          <div class="content" style="max-width: calc(100% - 5rem);">
+            Группа <span class="groupName">435</span>
+            <div class="sub header">
+              РосНОУ / <span class="instituteShort mobile">ИИСиИКТ</span><span class="institute desktop">Институт
+                информационных систем и инженерно-компьютерных технологий</span> / <span
+                class="studyLevel">Бакалавриат</span>
+            </div>
+          </div>
+        </h2>
+      </div>
+      <div class="three wide column desktop">
+        <button class="ui icon fluid button" style="height: 100%;" onclick="openSettings();">
+          <i class="big cog icon"></i>
+        </button>
+      </div>
+    </div>
+    <script>
+      instituteShort = {
+        'Институт информационных систем и инженерно-компьютерных технологий': 'ИИСиИКТ',
+        'Институт бизнес-технологий': 'ИБТ',
+        'Институт психологии и педагогики': 'ИПиП',
+        'Юридический институт': 'ЮИ',
+        'Институт экономики, управления и финансов': 'ИЭУиФ',
+      }
+      $('span.groupName').html(group.groupName)
+      $('span.institute').html(group.institute)
+      $('span.instituteShort').html(instituteShort[group.institute])
+      $('span.studyLevel').html(group.studyLevel)
+    </script>
+    <div class="ui calendar" id="standard_calendar" style="margin-top: 3rem;">
+      <div class="ui fluid action input left icon">
+        <i class="calendar icon"></i>
+        <input type="text"
+          style="font-weight: 500; padding-bottom: 0.77rem; background-color: #E8E8E8; border: none; cursor: pointer;"
+          readonly onchange="getClasses();">
+        <button class="ui icon black button" onclick="goBack();">
+          <i class="angle left icon"></i>
+        </button>
+        <button class="ui icon black button" onclick="goForward();">
+          <i class="angle right icon"></i>
+        </button>
+      </div>
+    </div>
+    <script>
+      $('#standard_calendar')
+        .calendar({
+          type: 'date',
+          text: {
+            days: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь',
+              'Ноябрь', 'Декабрь'
+            ],
+            monthsShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            today: 'Сегодня'
+          },
+          firstDayOfWeek: 1,
+          today: true,
+          formatter: {
+            date: function (caldate, settings) {
+              if (!caldate) caldate = new Date();
+              var weekday = settings.text.days[caldate.getDay()];
+              var day = caldate.getDate();
+              var month = settings.text.months[caldate.getMonth()];
+              var year = caldate.getFullYear();
+              return weekday + ' | ' + day + ' ' + month + ' ' + year;
+            }
+          },
+          onChange: function (caldate, text) {
+            date = caldate;
+            try {
+              getClasses();
+            } catch (e) {
+              console.log(e);
+              $('body')
+            }
+            date.setUTCHours(0);
+            date.setUTCMinutes(0);
+            date.setUTCSeconds(0);
+            date.setUTCMilliseconds(0);
+          },
+        });
+      $('#standard_calendar').calendar('set date', new Date(), updateInput = true, fireChange = true);
+      date = $('#standard_calendar').calendar('get date');
+    </script>
+    <div id="classes" class="ui basic fitted segment">
+      <div class="ui placeholder segment dayoff">
+        <div class="ui icon header">
+          <i class="check icon"></i>
+          Выходной!
+        </div>
+      </div>
+    </div>
+    <div class="ui section divider"></div>
+    <div class="ui basic fitted segment" id="promo">
+      <div class="ui stackable two column grid">
+        <div class="column">
+          <div class="ui fluid card">
+            <div class="content">
+              <div class="header">Ошибка в расписании?</div>
+              <div class="description">
+                О найденных ошибках можно сообщить администратору с помощью Telegram.
+              </div>
+            </div>
+            <a class="ui bottom attached telegram button" href="https://t.me/skhrvg" target="_blank">
+              <i class="telegram icon"></i>
+              @skhrvg
+            </a>
+          </div>
+        </div>
+        <div class="column">
+          <div class="ui fluid card"
+            style="box-shadow: 0 1px 3px 0 #FBBD08, 0 0 0 1px #FBBD08; -webkit-box-shadow: 0 1px 3px 0 #FBBD08, 0 0 0 1px #FBBD08;">
+            <div class="content">
+              <div class="header">Админ хочет кушать</div>
+              <div class="description">
+                Если тебе нравится этот сайт, можешь поддержать развитие проекта рублем :)
+              </div>
+            </div>
+            <a class="ui bottom attached yellow button" href="https://www.tinkoff.ru/sl/3ANnkkvxZLd" target="_blank">
+              <i class="coins icon"></i>
+              Поддержать
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="ui container">
+    <p>Не включает экзамены. Могут присутствовать ошибки.</p>
+    <p>Синхронизация с <a href="http://rosnou.ru/student/shedule/">rosnou.ru</a>: <span id="lastUpdate">нет
+        данных</span></p>
+  </footer>
+  <script>
+    try {
+      $('span#lastUpdate').html(group.lastUpdate.slice(0, 10));
+    } catch (e) {
+      console.log(e);
+    }
+  </script>
+</body>
+
+</html>

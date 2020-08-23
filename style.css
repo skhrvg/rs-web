@@ -1,0 +1,107 @@
+#page {
+  max-width: 768px;
+  min-height: calc(100% - 4rem);
+  padding: 4rem 3rem;
+}
+.topmenu {
+  width: 100% !important;
+}
+.noshadow {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+body {
+  margin: 3rem 0;
+  height: calc(100% - 6rem);
+  background-color: #edeef0;
+}
+.classTime,
+.classDiscipline,
+.classProfessor,
+.classType,
+.classComment,
+.classLocation,
+.classInfo {
+  margin: 0.1rem 0 !important;
+  padding: 0 !important;
+}
+.class {
+  border: 0 !important;
+  border-left: 2pt solid #1b1c1d !important;
+  background-color: #f8f8f8 !important;
+}
+.classComment {
+  color: red;
+}
+.classLocation {
+  color: green;
+}
+.classProfessor {
+  font-size: smaller;
+  color: gray;
+  margin-top: 0.5rem !important;
+}
+.classTime {
+  margin-bottom: 0.5rem !important;
+}
+.classInfo {
+  margin-top: 0.4rem !important;
+}
+footer {
+  max-width: 768px !important;
+  font-size: 8pt;
+  color: gray;
+  margin: 0;
+  padding: 1rem 0.5rem;
+}
+footer > p {
+  margin: 0;
+}
+.desktop {
+  display: initial !important;
+}
+.mobile {
+  display: none !important;
+}
+.dayoff {
+  background: white !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 10rem 0 !important;
+}
+
+@media only screen and (max-width: 450px) {
+  #page {
+    max-width: auto;
+    padding: 3rem 1rem 1.5rem 1rem;
+    min-height: auto;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    margin: 0 0 5rem 0;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+  footer {
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0pt -4pt 8pt 8pt rgba(255, 255, 255, 1);
+    width: 100% !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .desktop {
+    display: none !important;
+  }
+  .mobile {
+    display: initial !important;
+  }
+  .column {
+    padding: 0.5rem 0 !important;
+  }
+}
