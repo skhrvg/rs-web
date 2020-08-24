@@ -89,7 +89,7 @@ function saveSettings() {
 }
 
 function openSettings() {
-  $(".mini.modal")
+  $("#settings")
     .modal("setting", "closable", false)
     .modal("setting", "autofocus", false)
     .modal("show");

@@ -14,6 +14,7 @@ body {
   margin: 3rem 0;
   height: calc(100% - 6rem);
   background-color: #edeef0;
+  overflow-x: hidden;
 }
 .classTime,
 .classDiscipline,
@@ -68,13 +69,29 @@ footer > p {
   border: none !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  padding: 9rem 0 !important;
+  padding: calc(50vh - 25rem) 0 !important;
+  min-height: 12rem !important;
 }
 #classes {
-  min-height: 25rem;
+  min-height: calc(100vh - 40rem);
+}
+.ui.popup.calendar {
+  width: 80% !important;
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 767px) {
+  .desktop {
+    display: none !important;
+  }
+  .mobile {
+    display: initial !important;
+  }
+  .column {
+    padding: 0.5rem 0 !important;
+  }
+  .dayoff {
+    padding: 5rem 0 !important;
+  }
   #page {
     max-width: auto;
     padding: 3rem 1rem 1.5rem 1rem;
@@ -90,21 +107,14 @@ footer > p {
     background-color: white;
   }
   footer {
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
     position: fixed;
     bottom: 0;
     background-color: white;
     box-shadow: 0pt -4pt 8pt 8pt rgba(255, 255, 255, 1);
     width: 100% !important;
   }
-}
-@media only screen and (max-width: 767px) {
-  .desktop {
-    display: none !important;
-  }
-  .mobile {
-    display: initial !important;
-  }
-  .column {
-    padding: 0.5rem 0 !important;
+  #classes {
+    min-height: calc(100vh - 24rem);
   }
 }
